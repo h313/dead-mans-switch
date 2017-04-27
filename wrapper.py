@@ -2,6 +2,6 @@
 
 from send import send
 
-exec(open("./server").read())
+exec(open("./server.py").read())
 
 send()

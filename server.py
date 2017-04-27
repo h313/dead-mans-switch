@@ -10,10 +10,7 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-
-# modify these!
-secret_key = "keyboard catt"
-password = b"password"
+from config import Config
 
 last_verify = [datetime.now()]
 salt = os.urandom(16)
@@ -24,8 +21,9 @@ kdf = PBKDF2HMAC(
     iterations=100000,
     backend=default_backend()
 )
-key = base64.urlsafe_b64encode(kdf.derive(password))
+key = base64.urlsafe_b64encode(kdf.derive(Config.password))
 f = Fernet(key)
+
 
 def check_verify():
     temp_date = datetime.now() - last_verify[0]
@@ -47,13 +45,16 @@ atexit.register(lambda: scheduler.shutdown())
 app = Flask(__name__)
 
 
-@app.route("/verify")
+@app.route("/verify", methods=['POST'])
 def verify():
     data = request.get_json()
-    if f.decrypt(data["key"]) == secret_key:
+    print(data)
+    if f.decrypt(str.encode(data["key"])) == Config.secret_key:
+        print('verified!')
         last_verify[0] = datetime.now()
         return jsonify({"success": True})
     else:
+        print('denied!')
         return jsonify({"success": False})
 
 if __name__ == "__main__":
