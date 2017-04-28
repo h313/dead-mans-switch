@@ -48,8 +48,8 @@ app = Flask(__name__)
 @app.route("/verify", methods=['POST'])
 def verify():
     data = request.get_json()
-    print(data)
-    if f.decrypt(str.encode(data["key"])) == Config.secret_key:
+    print(data["key"])
+    if f.decrypt(data["key"]) == Config.secret_key:
         print('verified!')
         last_verify[0] = datetime.now()
         return jsonify({"success": True})

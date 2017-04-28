@@ -1,7 +1,6 @@
 import base64
 import os
 import requests
-import json
 from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
@@ -20,5 +19,5 @@ key = base64.urlsafe_b64encode(kdf.derive(Config.password))
 f = Fernet(key)
 token = f.encrypt(str.encode(Config.secret_key))
 print(token)
-r = requests.post(Config.url + '/verify', data=json.dumps({"key": str(token)}))
+r = requests.post(Config.url + '/verify', json={"key": str(token)})
 print(r)
