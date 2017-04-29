@@ -6,10 +6,8 @@ class Config:
     testing = True
     # URL of the server (keep the http!)
     url = "http://127.0.0.1:5000"
-    # a password to be encrypted
+    # a password to be used
     secret_key = "keyboard catt"
-    # an actual password
-    password = b"password"
 
     # email stuff
     server = 'mail.your-domain.com'

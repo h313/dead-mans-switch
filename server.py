@@ -4,25 +4,9 @@ from datetime import datetime
 import atexit
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
-import base64
-import os
-from cryptography.fernet import Fernet
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from config import Config
 
 last_verify = [datetime.now()]
-salt = os.urandom(16)
-kdf = PBKDF2HMAC(
-    algorithm=hashes.SHA256(),
-    length=32,
-    salt=salt,
-    iterations=100000,
-    backend=default_backend()
-)
-key = base64.urlsafe_b64encode(kdf.derive(Config.password))
-f = Fernet(key)
 
 
 def check_verify():
@@ -49,7 +33,7 @@ app = Flask(__name__)
 def verify():
     data = request.get_json()
     print(data["key"])
-    if f.decrypt(data["key"]) == Config.secret_key:
+    if data["key"] == Config.secret_key:
         print('verified!')
         last_verify[0] = datetime.now()
         return jsonify({"success": True})
