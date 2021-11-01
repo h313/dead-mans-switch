@@ -1,8 +1,12 @@
 # dead-mans-switch
 A dead man's switch which will send out a prerecorded message via email to predetermined people after a time limit if not deactivated
 
+# DON'T ACTUALLY USE THIS FOR REAL STUFF
+
+This was an old hobby project, and I haven't tested the reliability of it. Don't use it for real stuff.
+
 ## Why?
-Let's say you know something really important. But people are coming after you because of it. Set up this on a computer somewhere, and keep sending a key to it. If, at some time, the key is no longer sent, this program assumes you're dead and sends out the message. If the process is ended, this program assumes you're dead and sends out the mssage. It's the perfect insurance!
+Let's say you know something really important. But people are coming after you because of it. Set up this on a computer somewhere, and keep sending a key to it. If, at some time, the key is no longer sent, this program assumes you're dead and sends out the message. If the process is ended, this program assumes you're dead and sends out the message. It's the perfect insurance!
 
 ## Setting it up
 You'll need Python 3, `pip`, and all the packages in `requirements.txt`.
